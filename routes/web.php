@@ -12,5 +12,6 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return \Localization::getActiveLocale();
+    // return view('welcome');
 });

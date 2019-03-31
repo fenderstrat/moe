@@ -79,6 +79,14 @@ return [
     | to any of the locales which will be supported by the application.
     |
     */
+    'enable_localization' => true,
+
+    'localization_languages' => [
+        'id' => 'Bahasa Indonesia',
+        'en' => 'English',
+        'es' => 'Espana',
+
+    ],
 
     'locale' => 'en',
 
@@ -225,6 +233,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Localization' => Services\Localization\LocalizationFacade::class,
 
     ],
 
