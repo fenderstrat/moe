@@ -9,10 +9,16 @@
                 <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">{{ __('auth.login.greeting') }}</h1>
                 </div>
-                {!! Form::open()->method('post')->route('login') !!}
-                    {!! Form::text('email', __('auth.login.email.label'))->type('email')->placeholder(__('auth.login.email.placeholder')) !!}
-                    {!! Form::text('password', __('auth.login.password.label'))->type('password')->placeholder(__('auth.login.password.placeholder')) !!}
-                    {!! Form::submit( __('auth.login.submit'))->attrs(['class'=>' btn-block'])->primary()->lg() !!}
+                {!! Form::open(['route'=>'login', 'class'=>'user']) !!}
+                    <div class="form-group">
+                        {!! Form::email('email', old('email'), ['placeholder'=> __('auth.login.email.placeholder'), 'class'=>'form-control form-control-user']) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::password('password', ['placeholder'=> __('auth.login.password.placeholder'), 'class'=>'form-control form-control-user']) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::submit( __('auth.login.submit'), ['class'=>'btn btn-primary btn-user btn-block']) !!}
+                    </div>
                 {!! Form::close() !!}
                 <hr>
                 {{-- <div class="text-center">

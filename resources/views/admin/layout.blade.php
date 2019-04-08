@@ -3,14 +3,19 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="noindex">
-    <title> Login</title>
+    <title> @yield('title')</title>
     <!-- Custom fonts for this template-->
     <link href="{{ asset('admin/fontawesom/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <!-- Custom styles for this template-->
+    <link href="{{ asset('admin/fontawesome/css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/sb-admin-2.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/css/style-theme.min.css') }}" rel="stylesheet">
+    @stack('css')
+    @notify_css
 </head>
 
 <body id="page-top">
@@ -63,12 +68,15 @@
         </div>
     </div>
     <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('admin/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin/js/bootstrap.min.js') }}"></script>
     <!-- Core plugin JavaScript-->
-    <script src="{{ asset('js/jquery.easing.min.js') }}"></script>
+    <script src="{{ asset('admin/js/jquery.easing.min.js') }}"></script>
     <!-- Custom scripts for all pages-->
-    <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+    <script src="{{ asset('admin/js/sb-admin-2.js') }}"></script>
+    @stack('js')
+    @notify_js
+    @notify_render
 </body>
 
 </html>
