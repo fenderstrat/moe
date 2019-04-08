@@ -79,16 +79,16 @@ return [
     | to any of the locales which will be supported by the application.
     |
     */
-    'enable_localization' => true,
+    'enable_translation' => true,
 
-    'localization_languages' => [
+    'translation_languages' => [
         'id' => 'Bahasa Indonesia',
         'en' => 'English',
         'es' => 'Espana',
 
     ],
 
-    'locale' => 'en',
+    'locale' => 'id',
 
     /*
     |--------------------------------------------------------------------------
@@ -233,7 +233,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Localization' => Services\Localization\LocalizationFacade::class,
+        'Translation' => Services\Translation\TranslationFacade::class,
+        'Table' => Services\Table\TableFacade::class,
 
     ],
 

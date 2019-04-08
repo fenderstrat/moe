@@ -14,8 +14,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        \App::bind('localization', function() {
-            return \App::make(\Services\Localization\Localization::class);
+        \App::bind('translation', function() {
+            return \App::make(\Services\Translation\Translation::class);
+        });
+
+        \App::bind('table', function() {
+            return \App::make(\Services\Table\Table::class);
         });
     }
 
