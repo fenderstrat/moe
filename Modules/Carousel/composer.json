@@ -1,0 +1,25 @@
+{
+    "name": "moe/carousel",
+    "description": "",
+    "authors": [
+        {
+            "name": "Moe",
+            "email": "moe@moe.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Carousel\\Providers\\CarouselServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Carousel\\": ""
+        }
+    }
+}

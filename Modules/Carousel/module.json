@@ -1,0 +1,14 @@
+{
+    "name": "Carousel",
+    "alias": "carousel",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Carousel\\Providers\\CarouselServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
