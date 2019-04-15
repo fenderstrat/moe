@@ -6,7 +6,7 @@
     <h1 class="h3 mb-4 text-gray-800">{{  __('carousel::carousel.index.title') }}</h1>
     <div class="row">
         <div class="col-md-8">
-            {!! Table::model($carousels)->name('carousel')->show('title', 'image')->render() !!}
+            {!! Table::model($carousels)->name('carousel')->show('title', 'image')->actions('sort', 'destroy', 'search')->render() !!}
         </div>
         <div class="col-md-4">
             <div class="card">

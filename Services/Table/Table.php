@@ -26,14 +26,21 @@ final class Table
         return $this;
     }
 
+    public function actions(... $actions): self
+    {
+        $this->actions = array_intersect($actions, Filter::all());
+        return $this;
+    }
+
     public function render()
     {
         $model = $this->model;
         $name = $this->name;
         $rows = $this->rows;
+        $toolbar = $this->actions;
         if (\Translation::isEnabled()) {
-            return view('services.table.multilang', compact('model', 'rows', 'name'));
+            return view('services.table.multilang', compact('model', 'rows', 'name', 'toolbar'));
         }
-        return view('services.table.default', compact('model', 'rows', 'name'));
+        return view('services.table.default', compact('model', 'rows', 'name', 'toolbar'));
     }
 }

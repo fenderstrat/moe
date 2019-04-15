@@ -69,6 +69,7 @@
     </div>
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('admin/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin/js/popper.min.js') }}"></script>
     <script src="{{ asset('admin/js/bootstrap.min.js') }}"></script>
     <!-- Core plugin JavaScript-->
     <script src="{{ asset('admin/js/jquery.easing.min.js') }}"></script>

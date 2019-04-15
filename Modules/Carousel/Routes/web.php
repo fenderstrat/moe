@@ -16,6 +16,7 @@ Route::group(['middleware' => ['web', 'auth'], 'as' => 'admin.', 'prefix' => 'ad
     Route::post('store', '\Modules\Carousel\Http\Controllers\CarouselAdminController@store')->name('carousel.store');
     Route::post('save', '\Modules\Carousel\Http\Controllers\CarouselAdminController@save')->name('carousel.save');
     Route::post('{id}/update', '\Modules\Carousel\Http\Controllers\CarouselAdminController@update')->name('carousel.update');
+    Route::post('batch/destroy', '\Modules\Carousel\Http\Controllers\CarouselAdminController@batchDestroy')->name('carousel.batch.destroy');
     if (Translation::isEnabled()) {
         Route::get('{id}/{language}/edit', '\Modules\Carousel\Http\Controllers\CarouselAdminController@edit')->name('carousel.edit');
         Route::get('{id}/{language}/destroy', '\Modules\Carousel\Http\Controllers\CarouselAdminController@destroy')->name('carousel.destroy');

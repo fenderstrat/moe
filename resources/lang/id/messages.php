@@ -17,7 +17,7 @@ return [
         'error' => 'Data gagal dipindah ke trash',
     ],
     'destroy' => [
-        'confirmation' => 'Anda yakin?',
+        'confirmation' => 'Anda yakin ingin menghapus data?',
         'success' => 'Data berhasil dihapus',
         'error' => 'Data gagal dihapus',
     ],

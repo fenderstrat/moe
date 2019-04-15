@@ -1,3 +1,25 @@
+
+function query_string_url_replacement(url, param, value) {
+  let re = new RegExp("[\\?&]" + param + "=([^&#]*)"), match = re.exec(url), delimiter, newString;
+
+  if (match === null) {
+      const hasQuestionMark = /\?/.test(url);
+      delimiter = hasQuestionMark ? "&" : "?";
+      newString = url + delimiter + param + "=" + value;
+  } else {
+      delimiter = match[0].charAt(0);
+      newString = url.replace(re, delimiter + param + "=" + value);
+  }
+
+  return newString;
+}
+
+function change_url(name, param) {
+  let currentUrl = window.location.href;
+  let url = query_string_url_replacement(currentUrl, name, param);
+  window.location = url;
+}
+
 (function($) {
   "use strict"; // Start of use strict
 
@@ -45,5 +67,8 @@
     }, 1000, 'easeInOutExpo');
     e.preventDefault();
   });
+
+  // bs tooltip
+  $('[data-toggle="tooltip"]').tooltip()
 
 })(jQuery); // End of use strict

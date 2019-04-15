@@ -2,8 +2,11 @@
 
 namespace Modules\Carousel\Http\Controllers;
 
+use App\Traits\CrudAction;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use App\Http\Requests\BatchActionRequest;
 use Modules\Carousel\Http\Requests\AddCarouselRequest;
 use Modules\Carousel\Http\Requests\CreateCarouselRequest;
 use Modules\Carousel\Http\Requests\UpdateCarouselRequest;
@@ -11,18 +14,22 @@ use Modules\Carousel\Repositories\CarouselRepositoryInterface;
 
 class CarouselAdminController extends Controller
 {
+    use CrudAction;
+
+    protected $model;
+
     public function __construct(CarouselRepositoryInterface $carousel)
     {
-        $this->carousel = $carousel;
+        $this->model = $carousel;
     }
 
     /**
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $carousels = $this->carousel->paginate();
+        $carousels = $this->model->paginate($request->all());
         return view('carousel::admin.index', compact('carousels'));
     }
 
@@ -42,15 +49,7 @@ class CarouselAdminController extends Controller
      */
     public function store(CreateCarouselRequest $request)
     {
-        try {
-            $this->carousel->store($request->transform());
-            notify()->success(__('messages.store.success'));
-            return redirect()->back();
-        } catch(\Exception $e) {
-            \Log::error($e->getMessage());
-            notify()->error(__('messages.store.error'));
-            return redirect()->back();
-        }
+        return $this->storeAction($request->transform());
     }
 
     /**
@@ -59,7 +58,7 @@ class CarouselAdminController extends Controller
      */
     public function add(int $id, string $locale)
     {
-        $carousel = $this->carousel->findCarousel($id);
+        $carousel = $this->model->findCarousel($id);
         $carousel->language = $locale;
         return view('carousel::admin.add', compact('carousel'));
     }
@@ -71,15 +70,7 @@ class CarouselAdminController extends Controller
      */
     public function save(AddCarouselRequest $request)
     {
-        try {
-            $this->carousel->save($request->transform());
-            notify()->success(__('messages.save.success'));
-            return redirect()->back();
-        } catch(\Exception $e) {
-            \Log::error($e->getMessage());
-            notify()->error(__('messages.save.error'));
-            return redirect()->back();
-        }
+        return $this->saveAction($request->transform());
     }
 
     /**
@@ -90,9 +81,9 @@ class CarouselAdminController extends Controller
     public function edit(int $id, string $language = null)
     {
         if (is_null($language)) {
-            $carousel = $this->carousel->find($id);
+            $carousel = $this->model->find($id);
         } else {
-            $carousel = $this->carousel->findByLanguage($id, $language);
+            $carousel = $this->model->findByLanguage($id, $language);
         }
 
         return view('carousel::admin.edit', compact('carousel'));
@@ -106,15 +97,7 @@ class CarouselAdminController extends Controller
      */
     public function update(int $id, UpdateCarouselRequest $request)
     {
-        try {
-            $this->carousel->update($id, $request->transform());
-            notify()->success(__('messages.update.success'));
-            return redirect()->back();
-        } catch(\Exception $e) {
-            \Log::error($e->getMessage());
-            notify()->error(__('messages.update.error'));
-            return redirect()->back();
-        }
+        return $this->updateAction($id, $request->transform());
     }
 
     /**
@@ -123,16 +106,19 @@ class CarouselAdminController extends Controller
      * @param string $language
      * @return Response
      */
-    public function destroy(int $id, string $language)
+    public function destroy(int $id, ?string $language = null)
     {
-        try {
-            $this->carousel->destroy($id, $language);
-            notify()->success(__('messages.destroy.success'));
-            return redirect()->back();
-        } catch(\Exception $e) {
-            \Log::error($e->getMessage());
-            notify()->error(__('messages.destroy.error'));
-            return redirect()->back();
-        }
+        return $this->destroyAction($id, $language);
+    }
+
+    /**
+     * Action for batch destroy
+     *
+     * @param BatchActionRequest $request
+     * @return boolean
+     */
+    public function batchDestroy(BatchActionRequest $request)
+    {
+        return $this->batchDestroyAction($request);
     }
 }

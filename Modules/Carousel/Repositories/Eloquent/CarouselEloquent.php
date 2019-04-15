@@ -10,15 +10,29 @@ use Modules\Carousel\Repositories\Eloquent\Entities\CarouselContent;
 
 class CarouselEloquent implements CarouselRepositoryInterface
 {
-    public function paginate()
+    public function paginate(array $data)
     {
-        return Carousel::select('*', 'carousel_id as id')->join(
+        $sort = 'desc';
+        if (isset($data['sort']) && in_array($data['sort'], ['desc', 'asc'])) {
+            $sort = $data['sort'];
+        }
+
+        $perPage = 10;
+        if (isset($data['per_page']) && intval($data['per_page']) > 0) {
+            $perPage = $data['per_page'];
+        }
+
+        $carousels = Carousel::select('*', 'carousel_id as id')->join(
             'carousel_contents', 'carousels.id','=','carousel_contents.carousel_id'
-        )
-        ->orderBy('carousel_id', 'asc')
+        )->orderBy('carousel_id', $sort)
         ->withAvailableTranslation()
-        ->findByActiveLocale()
-        ->paginate(10);
+        ->findByActiveLocale();
+
+        if (isset($data['q']) && ! empty($data['q'])) {
+            $carousels->where('title', '%'.$data['q'].'%');
+        }
+
+        return $carousels->paginate($perPage);
     }
 
     public function findCarousel(int $id)
@@ -84,8 +98,23 @@ class CarouselEloquent implements CarouselRepositoryInterface
             $carousel = Carousel::where('id', $id)->withCount('contents')->first();
             if ($carousel->contents_count == 0) {
                 Carousel::find($id)->delete();
-                return true;
             }
+            return true;
+        }
+        return false;
+    }
+
+
+    public function batchDestroy(array $ids)
+    {
+        $carousel = Carousel::whereIn('id', $ids);
+        if ($carousel->count() > 0) {
+            $carousel->delete();
+            $content = CarouselContent::whereIn('carousel_id', $ids);
+            if ($content->count() > 0) {
+                $content->delete();
+            }
+            return true;
         }
         return false;
     }
