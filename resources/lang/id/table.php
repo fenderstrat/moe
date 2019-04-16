@@ -26,6 +26,17 @@ return [
             'tooltips' => 'Jumlah item yang ditampilkan'
         ]
     ],
+    'status' => [
+        'trash' => [
+            'tooltips' => 'Data ada di tempat sampah'
+        ],
+        'publish' => [
+            'tooltips' => 'Data diterbitkan'
+        ],
+        'draft' => [
+            'tooltips' => 'Data didraft'
+        ],
+    ],
     'head' => [
         'locale' => 'Bahasa',
         'action' => 'Aksi',

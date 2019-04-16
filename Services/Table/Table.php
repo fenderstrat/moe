@@ -38,9 +38,6 @@ final class Table
         $name = $this->name;
         $rows = $this->rows;
         $toolbar = $this->actions;
-        if (\Translation::isEnabled()) {
-            return view('services.table.multilang', compact('model', 'rows', 'name', 'toolbar'));
-        }
-        return view('services.table.default', compact('model', 'rows', 'name', 'toolbar'));
+        return view('services.table.index', compact('model', 'rows', 'name', 'toolbar'));
     }
 }
